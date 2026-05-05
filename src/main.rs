@@ -1,14 +1,15 @@
 use std::io::{self, Write};
 use std::process::Command;
+use owo_colors::OwoColorize;
 
 fn main() {
     loop {
-        print!("pash> ");
+        print!("{}" ,"pash> ".bright_cyan());
         io::stdout().flush().unwrap();
 
         let mut input = String::new();
         if io::stdin().read_line(&mut input).is_err() {
-            eprintln!("Failed to read input");
+            eprintln!("{}", "Failed to read input".on_red());
             continue;
         }
 
