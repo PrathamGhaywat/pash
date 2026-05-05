@@ -1,3 +1,4 @@
+![Hackatime Badge](https://hackatime.hackclub.com/api/v1/badge/U097N0AKR6Z/PrathamGhaywat/pash)
 # PASH - PRATHAM'S AWESOME SHELL
 Pash is a modern shell written in Rust. Why you should use it? Because it's written in Rust and it's AWESOME. 
 

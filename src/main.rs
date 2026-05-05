@@ -1,10 +1,35 @@
 use std::io::{self, Write};
+use std::path::{Path, PathBuf};
 use std::process::Command;
+use std::{env};
 use owo_colors::OwoColorize;
+
+fn normalize(path: &Path) -> String {
+    path.to_string_lossy().replace("\\", "/")
+}
+
+fn current_dir() -> String {
+    /* 
+    This will get the current dir. The need for this is because the crate returns the full file path, 
+    but we want the relative file path from the user bin.
+    */
+    let path = env::current_dir().unwrap_or_else(|_| PathBuf::from("?"));
+    let s = normalize(&path);
+
+    if let Some(home) = dirs::home_dir() {
+        let home = normalize(&home);
+
+        if let Some(stripped) = s.strip_prefix(&home) {
+            return format!("~{}", stripped);
+        }
+    }
+
+    return s;
+}
 
 fn main() {
     loop {
-        print!("{}" ,"pash> ".bright_cyan());
+        print!("{:?} {}" , current_dir().bright_cyan(), "$ ".bright_green());
         io::stdout().flush().unwrap();
 
         let mut input = String::new();
@@ -32,7 +57,7 @@ fn main() {
                 let _ = child.wait();
             }
             Err(e) => {
-                eprintln!("Error: {}", e);
+                eprintln!("{} {}", "Error:".bright_red(), e.bright_red());
             }
         }
     }
