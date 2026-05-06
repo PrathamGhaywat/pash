@@ -5,6 +5,7 @@ use std::{env};
 use owo_colors::OwoColorize;
 
 fn normalize(path: &Path) -> String {
+    // normalizing path: because shitty windows gives us \\ instead of beautiful Unix style /
     path.to_string_lossy().replace("\\", "/")
 }
 
