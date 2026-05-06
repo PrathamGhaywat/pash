@@ -1,18 +1,18 @@
-use std::io::{self, Write};
-use std::process::Command;
-use owo_colors::OwoColorize;
 mod prompt;
+mod commands;
+mod builtins;
+mod result;
 
+use std::io::{Write};
+use owo_colors::OwoColorize;
+use result::CommandResult;
 fn main() {
     loop {
-        print!("{:?} {}" , prompt::current_dir().bright_cyan(), "$ ".bright_green());
-        io::stdout().flush().unwrap();
+        print!("{}{} ", prompt::current_dir().bright_cyan(), "$".bright_green());
+        std::io::stdout().flush().unwrap();
 
         let mut input = String::new();
-        if io::stdin().read_line(&mut input).is_err() {
-            eprintln!("{}", "Failed to read input".on_red());
-            continue;
-        }
+        std::io::stdin().read_line(&mut input).unwrap();
 
         let input = input.trim();
 
@@ -20,21 +20,10 @@ fn main() {
             continue;
         }
 
-        if input == "exit" {
+        let should_continue = commands::run(input);
+
+        if !should_continue {
             break;
-        }
-
-        let mut parts = input.split_whitespace();
-        let command = parts.next().unwrap();
-        let args: Vec<&str> = parts.collect();
-
-        match Command::new(command).args(&args).spawn() { // this will allow us to spawn new programs
-            Ok(mut child) => {
-                let _ = child.wait();
-            }
-            Err(e) => {
-                eprintln!("{} {}", "Error:".bright_red(), e.bright_red());
-            }
         }
     }
 }
