@@ -14,11 +14,14 @@ pub fn run(input: &str) -> bool {
 
     match command {
         //builtin commands then external
-        "cd" => {
+        "cd" => { //s witch to a certain directory
             builtins::cd::run(&args); // c deez nuts
         }
         "pwd" => {
-            println!("{}", prompt::current_dir());
+            println!("{}", prompt::current_dir()); //get current working dir
+        }
+        "touch" => {
+            builtins::touch::run(&args);
         }
         "exit"  => {
             return false;

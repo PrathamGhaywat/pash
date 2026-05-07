@@ -8,7 +8,7 @@ use owo_colors::OwoColorize;
 use result::CommandResult;
 fn main() {
     loop {
-        print!("{}{} ", prompt::current_dir().bright_cyan(), "$".bright_green());
+        print!("{} {} ", prompt::current_dir().bright_cyan(), "$".bright_green());
         std::io::stdout().flush().unwrap();
 
         let mut input = String::new();
