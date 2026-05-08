@@ -5,7 +5,7 @@ mod result;
 
 use std::io::{Write};
 use owo_colors::OwoColorize;
-use result::CommandResult;
+pub use result::CommandResult;
 fn main() {
     loop {
         print!("{} {} ", prompt::current_dir().bright_cyan(), "$".bright_green());

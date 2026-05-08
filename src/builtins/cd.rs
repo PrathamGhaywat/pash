@@ -1,7 +1,7 @@
 use std::env;
 use std::path::PathBuf;
 
-use crate::CommandResult;
+use crate::result::CommandResult;
 
 pub fn run(args: &[&str]) -> CommandResult {
     let target = args.get(0).copied().unwrap_or("~");

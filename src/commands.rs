@@ -2,6 +2,7 @@ use std::process::Command;
 
 use crate::builtins;
 use crate::prompt;
+use crate::result::CommandResult;
 
 pub fn run(input: &str) -> bool {
     let mut parts = input.split_whitespace();
@@ -15,13 +16,13 @@ pub fn run(input: &str) -> bool {
     match command {
         //builtin commands then external
         "cd" => { //s witch to a certain directory
-            builtins::cd::run(&args); // c deez nuts
+            print_result(builtins::cd::run(&args)); // c deez nuts
         }
         "pwd" => {
             println!("{}", prompt::current_dir()); //get current working dir
         }
         "touch" => {
-            builtins::touch::run(&args);
+            print_result(builtins::touch::run(&args));
         }
         "exit"  => {
             return false;
@@ -33,6 +34,10 @@ pub fn run(input: &str) -> bool {
     }
 
     true
+}
+
+fn print_result(result: CommandResult) {
+    println!("{}", serde_json::to_string(&result).unwrap());
 }
 
 fn run_external(cmd: &str, args: &[&str]) {

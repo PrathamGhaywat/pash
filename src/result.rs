@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Debug, serde::Serialize)]
 pub struct CommandResult {
     pub success: bool,
     pub output: String,
